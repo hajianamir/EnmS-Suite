@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: verdantos-postgres
+    environment:
+      POSTGRES_DB: verdantos
+      POSTGRES_USER: verdantos
+      POSTGRES_PASSWORD: verdantos_secret_password
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: verdantos-redis
+    ports:
+      - "6379:6379"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: verdantos-kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.0
+    container_name: verdantos-schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:29092'
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.5
+    container_name: verdantos-keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin_password
+    command: start-dev
+    ports:
+      - "8080:8080"
+
+  api-gateway:
+    image: alpine:latest
+    container_name: verdantos-api-gateway
+    command: sh -c "echo 'Kong API Gateway Running...' && sleep infinity"
+    ports:
+      - "8000:8000"
+
+  service-ingestion:
+    image: alpine:latest
+    container_name: verdantos-svc-ingestion
+    command: sh -c "echo 'Ingestion Service Running...' && sleep infinity"
+
+  service-semantic-graph:
+    image: alpine:latest
+    container_name: verdantos-svc-semantic-graph
+    command: sh -c "echo 'Semantic Graph Service Running...' && sleep infinity"
+
+  service-enpi-engine:
+    image: alpine:latest
+    container_name: verdantos-svc-enpi-engine
+    command: sh -c "echo 'EnPI Engine Service Running...' && sleep infinity"
+
+  service-anomaly-stream:
+    image: alpine:latest
+    container_name: verdantos-svc-anomaly-stream
+    command: sh -c "echo 'Anomaly Stream Service Running...' && sleep infinity"
+
+  service-audit:
+    image: alpine:latest
+    container_name: verdantos-svc-audit
+    command: sh -c "echo 'Audit Service Running...' && sleep infinity"
+
+  web-dashboard:
+    image: alpine:latest
+    container_name: verdantos-web-dashboard
+    command: sh -c "echo 'React UI Web Shell Running...' && sleep infinity"
+    ports:
+      - "3000:3000"
+
+  edge-gateway-minimal:
+    image: alpine:latest
+    container_name: verdantos-edge-minimal
+    command: sh -c "echo 'Edge Gateway Minimal Profile Running...' && sleep infinity"
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
+  edge-gateway-standard:
+    image: alpine:latest
+    container_name: verdantos-edge-standard
+    command: sh -c "echo 'Edge Gateway Standard Profile Running...' && sleep infinity"
+    deploy:
+      resources:
+        limits:
+          memory: 150M
+
+  edge-gateway-full:
+    image: alpine:latest
+    container_name: verdantos-edge-full
+    command: sh -c "echo 'Edge Gateway Full Profile Running...' && sleep infinity"
+    deploy:
+      resources:
+        limits:
+          memory: 300M

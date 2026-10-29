@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: VerdantOS Core API
+  version: 1.0.0
+  description: Executable OpenAPI contract for VerdantOS microservices.
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+  /api/v1/assets:
+    get:
+      summary: Get assets tree
+      responses:
+        '200':
+          description: Asset list

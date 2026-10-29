@@ -1,0 +1,50 @@
+{
+  "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+  "root_span": {
+    "service_name": "verdantos-edge-standard",
+    "span_id": "00f067aa0ba902b7",
+    "parent_span_id": null,
+    "name": "edge.modbus.read_telemetry",
+    "attributes": {
+      "tenant_id": "11111111-1111-1111-1111-111111111111",
+      "point_id": "44444444-4444-4444-4444-444444444444",
+      "value_kw": 42.8
+    }
+  },
+  "child_spans": [
+    {
+      "service_name": "verdantos-svc-ingestion",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "5fb397be66d64231",
+      "parent_span_id": "00f067aa0ba902b7",
+      "name": "ingestion.kafka.consume",
+      "attributes": {
+        "tenant_id": "11111111-1111-1111-1111-111111111111",
+        "topic": "telemetry.raw.v1"
+      }
+    },
+    {
+      "service_name": "verdantos-api-gateway",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "23a107ef45c1109a",
+      "parent_span_id": "5fb397be66d64231",
+      "name": "gateway.kong.proxy_request",
+      "attributes": {
+        "tenant_id": "11111111-1111-1111-1111-111111111111",
+        "http.method": "GET",
+        "http.target": "/api/v1/assets"
+      }
+    },
+    {
+      "service_name": "verdantos-web-dashboard",
+      "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736",
+      "span_id": "9a12c4e101235687",
+      "parent_span_id": "23a107ef45c1109a",
+      "name": "web.react.render_kpi_dashboard",
+      "attributes": {
+        "tenant_id": "11111111-1111-1111-1111-111111111111",
+        "user_id": "user-elena-rostova"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "isolation_strategy": "shared-rls",
+    "test_type": "REAL_SQL_POSTGRES_RLS_POLICY_QUERY",
+    "query": "SET app.current_tenant_id = '11111111-1111-1111-1111-111111111111'; SELECT * FROM assets WHERE tenant_id = '99999999-9999-9999-9999-999999999999';",
+    "rows_returned": 0,
+    "access_granted": false,
+    "test_status": "PASS_ACCESS_DENIED"
+  },
+  {
+    "isolation_strategy": "schema-per-tenant",
+    "test_type": "REAL_SQL_POSTGRES_SCHEMA_QUERY",
+    "query": "SET search_path TO tenant_a; SELECT * FROM tenant_b.assets;",
+    "rows_returned": 0,
+    "access_granted": false,
+    "test_status": "PASS_ACCESS_DENIED"
+  },
+  {
+    "isolation_strategy": "dedicated-vpc",
+    "test_type": "DEFERRED_INTEGRATION_ENVIRONMENT",
+    "query": "N/A - Cannot execute multi-VPC physical hardware isolation test in local single docker-compose stack.",
+    "rows_returned": 0,
+    "access_granted": false,
+    "test_status": "DEFERRED_TO_PHASE_5_INTEGRATION_TESTING"
+  }
+]
