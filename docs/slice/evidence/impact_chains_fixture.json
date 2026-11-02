@@ -1,0 +1,204 @@
+{
+  "chains": [
+    {
+      "id": "CHAIN-01",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444444",
+      "old_asset": "33333333-3333-3333-3333-333333333333",
+      "new_asset": "33333333-3333-3333-3333-333333333334",
+      "affected_enpis": ["ENPI-001", "ENPI-002"],
+      "affected_baselines": ["BL-001"],
+      "affected_reports": ["REP-ISO50001-M"]
+    },
+    {
+      "id": "CHAIN-02",
+      "change_type": "METER_DELETION",
+      "target_point": "44444444-4444-4444-4444-444444444445",
+      "old_asset": "33333333-3333-3333-3333-333333333335",
+      "new_asset": null,
+      "affected_enpis": ["ENPI-003", "ENPI-004", "ENPI-005"],
+      "affected_baselines": ["BL-002"],
+      "affected_reports": ["REP-CBAM-Q"]
+    },
+    {
+      "id": "CHAIN-03",
+      "change_type": "TYPE_MUTATION",
+      "target_point": "44444444-4444-4444-4444-444444444446",
+      "old_asset": "33333333-3333-3333-3333-333333333336",
+      "new_asset": "33333333-3333-3333-3333-333333333336",
+      "affected_enpis": ["ENPI-006"],
+      "affected_baselines": ["BL-003", "BL-004"],
+      "affected_reports": ["REP-MANAGEMENT-REVIEW"]
+    },
+    {
+      "id": "CHAIN-04",
+      "change_type": "HIERARCHY_REPARENT",
+      "target_point": "44444444-4444-4444-4444-444444444447",
+      "old_asset": "33333333-3333-3333-3333-333333333337",
+      "new_asset": "33333333-3333-3333-3333-333333333338",
+      "affected_enpis": ["ENPI-007"],
+      "affected_baselines": ["BL-005"],
+      "affected_reports": []
+    },
+    {
+      "id": "CHAIN-05",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444448",
+      "old_asset": "33333333-3333-3333-3333-333333333339",
+      "new_asset": "33333333-3333-3333-3333-333333333340",
+      "affected_enpis": ["ENPI-008", "ENPI-009"],
+      "affected_baselines": ["BL-006"],
+      "affected_reports": ["REP-ISO50001-A"]
+    },
+    {
+      "id": "CHAIN-06",
+      "change_type": "METER_DELETION",
+      "target_point": "44444444-4444-4444-4444-444444444449",
+      "old_asset": "33333333-3333-3333-3333-333333333341",
+      "new_asset": null,
+      "affected_enpis": ["ENPI-010"],
+      "affected_baselines": ["BL-007"],
+      "affected_reports": ["REP-GHG-SCOPE2"]
+    },
+    {
+      "id": "CHAIN-07",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444450",
+      "old_asset": "33333333-3333-3333-3333-333333333342",
+      "new_asset": "33333333-3333-3333-3333-333333333343",
+      "affected_enpis": ["ENPI-011", "ENPI-012"],
+      "affected_baselines": ["BL-008"],
+      "affected_reports": ["REP-SEU-AUDIT"]
+    },
+    {
+      "id": "CHAIN-08",
+      "change_type": "TYPE_MUTATION",
+      "target_point": "44444444-4444-4444-4444-444444444451",
+      "old_asset": "33333333-3333-3333-3333-333333333344",
+      "new_asset": "33333333-3333-3333-3333-333333333344",
+      "affected_enpis": ["ENPI-013"],
+      "affected_baselines": ["BL-009"],
+      "affected_reports": ["REP-ISO50001-M"]
+    },
+    {
+      "id": "CHAIN-09",
+      "change_type": "HIERARCHY_REPARENT",
+      "target_point": "44444444-4444-4444-4444-444444444452",
+      "old_asset": "33333333-3333-3333-3333-333333333345",
+      "new_asset": "33333333-3333-3333-3333-333333333346",
+      "affected_enpis": ["ENPI-014", "ENPI-015"],
+      "affected_baselines": ["BL-010"],
+      "affected_reports": ["REP-FACILITY-WEEKLY"]
+    },
+    {
+      "id": "CHAIN-10",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444453",
+      "old_asset": "33333333-3333-3333-3333-333333333347",
+      "new_asset": "33333333-3333-3333-3333-333333333348",
+      "affected_enpis": ["ENPI-016"],
+      "affected_baselines": ["BL-011"],
+      "affected_reports": []
+    },
+    {
+      "id": "CHAIN-11",
+      "change_type": "METER_DELETION",
+      "target_point": "44444444-4444-4444-4444-444444444454",
+      "old_asset": "33333333-3333-3333-3333-333333333349",
+      "new_asset": null,
+      "affected_enpis": ["ENPI-017", "ENPI-018"],
+      "affected_baselines": ["BL-012"],
+      "affected_reports": ["REP-ISO50001-M"]
+    },
+    {
+      "id": "CHAIN-12",
+      "change_type": "TYPE_MUTATION",
+      "target_point": "44444444-4444-4444-4444-444444444455",
+      "old_asset": "33333333-3333-3333-3333-333333333350",
+      "new_asset": "33333333-3333-3333-3333-333333333350",
+      "affected_enpis": ["ENPI-019"],
+      "affected_baselines": ["BL-013"],
+      "affected_reports": []
+    },
+    {
+      "id": "CHAIN-13",
+      "change_type": "HIERARCHY_REPARENT",
+      "target_point": "44444444-4444-4444-4444-444444444456",
+      "old_asset": "33333333-3333-3333-3333-333333333351",
+      "new_asset": "33333333-3333-3333-3333-333333333352",
+      "affected_enpis": ["ENPI-020"],
+      "affected_baselines": ["BL-014"],
+      "affected_reports": ["REP-CAMPUS-MONTHLY"]
+    },
+    {
+      "id": "CHAIN-14",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444457",
+      "old_asset": "33333333-3333-3333-3333-333333333353",
+      "new_asset": "33333333-3333-3333-3333-333333333354",
+      "affected_enpis": ["ENPI-021", "ENPI-022"],
+      "affected_baselines": ["BL-015"],
+      "affected_reports": ["REP-ISO50001-A"]
+    },
+    {
+      "id": "CHAIN-15",
+      "change_type": "METER_DELETION",
+      "target_point": "44444444-4444-4444-4444-444444444458",
+      "old_asset": "33333333-3333-3333-3333-333333333355",
+      "new_asset": null,
+      "affected_enpis": ["ENPI-023"],
+      "affected_baselines": ["BL-016"],
+      "affected_reports": []
+    },
+    {
+      "id": "CHAIN-16",
+      "change_type": "TYPE_MUTATION",
+      "target_point": "44444444-4444-4444-4444-444444444459",
+      "old_asset": "33333333-3333-3333-3333-333333333356",
+      "new_asset": "33333333-3333-3333-3333-333333333356",
+      "affected_enpis": ["ENPI-024", "ENPI-025"],
+      "affected_baselines": ["BL-017"],
+      "affected_reports": ["REP-CBAM-Q"]
+    },
+    {
+      "id": "CHAIN-17",
+      "change_type": "HIERARCHY_REPARENT",
+      "target_point": "44444444-4444-4444-4444-444444444460",
+      "old_asset": "33333333-3333-3333-3333-333333333357",
+      "new_asset": "33333333-3333-3333-3333-333333333358",
+      "affected_enpis": ["ENPI-026"],
+      "affected_baselines": ["BL-018"],
+      "affected_reports": []
+    },
+    {
+      "id": "CHAIN-18",
+      "change_type": "POINT_REASSIGNMENT",
+      "target_point": "44444444-4444-4444-4444-444444444461",
+      "old_asset": "33333333-3333-3333-3333-333333333359",
+      "new_asset": "33333333-3333-3333-3333-333333333360",
+      "affected_enpis": ["ENPI-027", "ENPI-028"],
+      "affected_baselines": ["BL-019"],
+      "affected_reports": ["REP-ISO50001-M"]
+    },
+    {
+      "id": "CHAIN-19",
+      "change_type": "METER_DELETION",
+      "target_point": "44444444-4444-4444-4444-444444444462",
+      "old_asset": "33333333-3333-3333-3333-333333333361",
+      "new_asset": null,
+      "affected_enpis": ["ENPI-029"],
+      "affected_baselines": ["BL-020"],
+      "affected_reports": ["REP-MANAGEMENT-REVIEW"]
+    },
+    {
+      "id": "CHAIN-20",
+      "change_type": "TYPE_MUTATION",
+      "target_point": "44444444-4444-4444-4444-444444444463",
+      "old_asset": "33333333-3333-3333-3333-333333333362",
+      "new_asset": "33333333-3333-3333-3333-333333333362",
+      "affected_enpis": ["ENPI-030"],
+      "affected_baselines": ["BL-021"],
+      "affected_reports": ["REP-ISO50001-A"]
+    }
+  ]
+}

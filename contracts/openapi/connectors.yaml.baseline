@@ -1,0 +1,333 @@
+openapi: 3.0.3
+info:
+  title: VerdantOS Connectors Service API
+  version: 1.0.0
+  description: OpenAPI 3.0 Contract for Data Connectors Service (§10.2 / ADR-007)
+paths:
+  /api/v1/connectors:
+    post:
+      summary: Register external data source
+      operationId: registerDataSource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSourceCreate'
+      responses:
+        '201':
+          description: Data source registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '400':
+          $ref: '#/components/responses/RFC9457Error'
+    get:
+      summary: List tenant data sources
+      operationId: listDataSources
+      responses:
+        '200':
+          description: List of registered data sources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataSource'
+
+  /api/v1/connectors/{id}:
+    get:
+      summary: Get data source detail and health
+      operationId: getDataSource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Data source details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataSource'
+        '404':
+          $ref: '#/components/responses/RFC9457Error'
+
+  /api/v1/connectors/{id}/sync:
+    post:
+      summary: Trigger data source synchronization run
+      operationId: triggerSync
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '202':
+          description: Sync run accepted and started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorRun'
+
+  /api/v1/connectors/{id}/runs:
+    get:
+      summary: List synchronization runs for a connector
+      operationId: listConnectorRuns
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of execution runs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConnectorRun'
+
+  /api/v1/connectors/{id}/preview:
+    post:
+      summary: Preview first 100 rows with detected column types (no database commit)
+      operationId: previewDataSource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Preview payload with data quality summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewResponse'
+
+  /api/v1/connectors/{id}/mappings:
+    post:
+      summary: Configure column to measurement point mappings
+      operationId: setSourceMappings
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SourceMappingCreate'
+      responses:
+        '200':
+          description: Mappings saved successfully
+
+  /api/v1/connectors/{id}/runs/{run_id}/errors:
+    get:
+      summary: Get detailed per-row data quality errors for a run
+      operationId: getRunErrors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: run_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of structured per-row errors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RowError'
+
+components:
+  schemas:
+    DataSourceCreate:
+      type: object
+      required:
+        - name
+        - source_type
+        - secret_ref
+      properties:
+        name:
+          type: string
+        source_type:
+          type: string
+          enum: [postgresql, mysql, sqlserver, sqlite, oracle, xlsx, csv]
+        runtime_placement:
+          type: string
+          enum: [cloud, edge]
+          default: cloud
+        secret_ref:
+          type: string
+          description: Pointer URI into secrets manager
+        connection_config:
+          type: object
+
+    DataSource:
+      type: object
+      required:
+        - id
+        - tenant_id
+        - name
+        - source_type
+        - is_active
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        source_type:
+          type: string
+        runtime_placement:
+          type: string
+        secret_ref:
+          type: string
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    ConnectorRun:
+      type: object
+      required:
+        - id
+        - tenant_id
+        - source_id
+        - status
+        - rows_read
+        - rows_committed
+        - rows_rejected
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant_id:
+          type: string
+          format: uuid
+        source_id:
+          type: string
+          format: uuid
+        run_type:
+          type: string
+        status:
+          type: string
+          enum: [RUNNING, COMPLETED, FAILED, PARTIAL]
+        rows_read:
+          type: integer
+        rows_committed:
+          type: integer
+        rows_rejected:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+
+    PreviewResponse:
+      type: object
+      required:
+        - total_rows_detected
+        - sample_rows
+        - detected_columns
+      properties:
+        total_rows_detected:
+          type: integer
+        sample_rows:
+          type: array
+          items:
+            type: object
+        detected_columns:
+          type: array
+          items:
+            type: string
+
+    SourceMappingCreate:
+      type: object
+      required:
+        - source_table
+        - source_column
+        - point_id
+      properties:
+        source_table:
+          type: string
+        source_column:
+          type: string
+        point_id:
+          type: string
+          format: uuid
+        transform_expression:
+          type: string
+
+    RowError:
+      type: object
+      required:
+        - row
+        - error_code
+        - message
+      properties:
+        row:
+          type: integer
+        error_code:
+          type: string
+          enum: [MISSING_REQUIRED_FIELD, INVALID_TYPE, DUPLICATE_IN_FILE, DUPLICATE_IN_DB, INVALID_PARENT_REFERENCE, TENANT_ISOLATION_VIOLATION, SOURCE_SCHEMA_DRIFT]
+        field:
+          type: string
+        message:
+          type: string
+
+  responses:
+    RFC9457Error:
+      description: Problem Details for HTTP APIs (RFC 9457)
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            required:
+              - type
+              - title
+              - status
+            properties:
+              type:
+                type: string
+              title:
+                type: string
+              status:
+                type: integer
+              detail:
+                type: string
+              instance:
+                type: string

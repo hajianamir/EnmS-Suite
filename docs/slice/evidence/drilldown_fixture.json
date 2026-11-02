@@ -1,0 +1,23 @@
+{
+  "id": "33333333-3333-3333-3333-333333333330",
+  "name": "Campus North",
+  "type": "site",
+  "path": "campus_north",
+  "children": [
+    {
+      "id": "33333333-3333-3333-3333-333333333331",
+      "name": "Building A",
+      "type": "building",
+      "path": "campus_north.bldg_a",
+      "children": [
+        {
+          "id": "33333333-3333-3333-3333-333333333333",
+          "name": "AHU Building A 01",
+          "type": "ahu",
+          "path": "campus_north.bldg_a.ahu_01",
+          "children": []
+        }
+      ]
+    }
+  ]
+}
